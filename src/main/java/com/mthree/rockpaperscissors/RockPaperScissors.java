@@ -20,7 +20,29 @@ public class RockPaperScissors {
     static final int COMPUTER_WIN = -1;
     static final int USER_WIN = 1;
 
-    public static int findWinner(int player, int computer) {
+    public static int playSingleGame() {
+        Scanner scanner = new Scanner(System.in);
+        int rockPaperScissorsPlayer;
+        int rockPaperScissorsComputer;
+        
+        do {
+            System.out.println("\n***************************************");
+            System.out.println("Pick Rock(1), Paper(2), or Scissors(3).");
+            rockPaperScissorsPlayer = scanner.nextInt();
+        } while (rockPaperScissorsPlayer != 1 && rockPaperScissorsPlayer != 2 && rockPaperScissorsPlayer != 3);
+        System.out.println("You picked...");
+        printSelection(rockPaperScissorsPlayer);
+
+        Random rand = new Random();
+        rockPaperScissorsComputer = rand.nextInt(3);
+        rockPaperScissorsComputer += 1;
+        System.out.println("Computer picks...");
+        printSelection(rockPaperScissorsComputer);
+
+        return findWinnerOfSingleGame(rockPaperScissorsPlayer, rockPaperScissorsComputer);
+    }
+    
+    public static int findWinnerOfSingleGame(int player, int computer) {
         if (player == computer) {
             System.out.println("Tie!");
             return TIE;
@@ -77,7 +99,7 @@ public class RockPaperScissors {
     
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        boolean playAgain = false;
+        int playAgain;
         
         do {
             int ties = 0;
@@ -90,27 +112,10 @@ public class RockPaperScissors {
                 System.out.println("Invalid number of rounds!");
                 break;
             }
-            
-            int rockPaperScissorsPlayer;
-            int rockPaperScissorsComputer;
-            
+                
             for (int i = 0; i < numberOfRounds; i++) {
-                do {
-                    System.out.println("\n***************************************");
-                    System.out.println("Pick Rock(1), Paper(2), or Scissors(3).");
-                    rockPaperScissorsPlayer = scanner.nextInt();
-                } while (rockPaperScissorsPlayer != 1 && rockPaperScissorsPlayer != 2 && rockPaperScissorsPlayer != 3);
-                System.out.println("You picked...");
-                printSelection(rockPaperScissorsPlayer);
-
-                Random rand = new Random();
-                rockPaperScissorsComputer = rand.nextInt(3);
-                rockPaperScissorsComputer += 1;
-                System.out.println("Computer picks...");
-                printSelection(rockPaperScissorsComputer);
-
-                int winner = findWinner(rockPaperScissorsPlayer, rockPaperScissorsComputer);
-                if (winner ==  TIE) {
+                int winner = playSingleGame();
+                if (winner == TIE) {
                     ties++;
                 }
                 if (winner == COMPUTER_WIN) {
@@ -123,14 +128,12 @@ public class RockPaperScissors {
             
             findOverallWinner(ties, computerWins, userWins);
             
-            int temp;
             do {
                 System.out.println("Play again? (0=no 1=yes)");
-                temp = scanner.nextInt();
-            } while (temp != 0 && temp != 1);
-            playAgain = temp == 0 ? false : true;
+                playAgain = scanner.nextInt();
+            } while (playAgain != 0 && playAgain != 1);
             
-        } while (playAgain == true);
+        } while (playAgain == 1);
         
         System.out.println("********Game Over********");
     }
