@@ -114,14 +114,14 @@ public class RockPaperScissors {
             }
                 
             for (int i = 0; i < numberOfRounds; i++) {
-                int winner = playSingleGame();
-                if (winner == TIE) {
+                int outcome = playSingleGame();
+                if (outcome == TIE) {
                     ties++;
                 }
-                if (winner == COMPUTER_WIN) {
+                if (outcome == COMPUTER_WIN) {
                     computerWins++;
                 }
-                if (winner == USER_WIN) {
+                if (outcome == USER_WIN) {
                     userWins++;
                 }
             }
